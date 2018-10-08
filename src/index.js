@@ -1,6 +1,6 @@
 import wwObject from './wwObject.vue'
 
-const name = "ww-text";
+const name = "ww-newsletter";
 const wwEnableMetrics = false;
 
 const addComponent = function () {
@@ -11,18 +11,7 @@ const addComponent = function () {
             name,
             {
                 type: name,
-                data: {
-                    text: {
-                        fr_FR: "Nouveau texte"
-                    },
-                    tag: "div", //h1, quote, code, ...
-                    align: "",
-                    font: "",
-                    size: "",
-                    color: "",
-                    classes: [],
-                    children: []
-                }
+                data: {}
             },
             wwEnableMetrics
         );
