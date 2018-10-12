@@ -1,17 +1,17 @@
 <template>
-  <div class="ww-newsletter">
-    <div class="input-email-container">
-      <input type="text" placeholder="Email" v-model="email">
-      <div v-bind:id="'btn-send-'+wwObject.uniqueId" v-bind:style="{'background-color': btnSendBgC}" class="btn-send" v-on:click="saveAddress()">
-        <i v-show="!loading" class="fa fa-paper-plane" aria-hidden="true"></i>
-        <i v-show="loading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
-        <div v-show="showAfterMessage" id="after-text">{{afterMessage}}</div>
-      </div>
+    <div class="ww-newsletter">
+        <div class="input-email-container">
+            <input type="text" placeholder="Email" v-model="email">
+            <div v-bind:id="'btn-send-'+wwObject.uniqueId" v-bind:style="{'background-color': btnSendBgC}" class="btn-send" v-on:click="saveAddress()">
+                <i v-show="!loading" class="fa fa-paper-plane" aria-hidden="true"></i>
+                <i v-show="loading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+                <div v-show="showAfterMessage" id="after-text">{{afterMessage}}</div>
+            </div>
+        </div>
+        <div v-if="invalidEmailAddress" class="invalid-email input-email-container">
+            {{wwLang.getText('sections.newsletter_A.invalidEmail')}}
+        </div>
     </div>
-    <div v-if="invalidEmailAddress" class="invalid-email input-email-container">
-      {{wwLang.getText('sections.newsletter_A.invalidEmail')}}
-    </div>
-  </div> 
 </template>
 
 
@@ -19,18 +19,24 @@
 export default {
     name: "ww-newsletter",
     props: {
-        wwObject: Object
+        wwObjectRef: Object
     },
     data() {
         return {
-        loading: false,
-        afterMessage: this.wwObject.content.data.nokMessage,
-        showAfterMessage: false,
-        invalidEmailAddress: false,
-        btnSendBgC: this.wwObject.content.data.btnSendBgC,
-        email: '',
-        wwLang: wwLib.wwLang
+            loading: false,
+            afterMessage: this.wwObject.content.data.nokMessage,
+            showAfterMessage: false,
+            invalidEmailAddress: false,
+            btnSendBgC: this.wwObject.content.data.btnSendBgC,
+            email: '',
+            wwLang: wwLib.wwLang
         }
+    },
+    computed: {
+        wwObject() {
+            //return this.wwObjectRef.wwGet();
+            return this.$store.state.wwObjects[this.wwObjectRef.uniqueId];
+        },
     },
     methods: {
         sendFormInfo: async function (designId, data) {
@@ -67,7 +73,7 @@ export default {
                 lang: wwLib.wwLang.lang,
                 type: 'newsletter',
                 form: {
-                email: this.email
+                    email: this.email
                 }
             };
 
@@ -107,169 +113,169 @@ export default {
             return;
         }
     },
-    mounted: function() {}
+    mounted: function () { }
 };
 </script>
 
 <style scoped>
-.ww-newsletter{
-    height: 100%;
-    width: 100%;
+.ww-newsletter {
+  height: 100%;
+  width: 100%;
 }
 
 .ww-newsletter .input-email-container {
-    width: 100%;
-    display: inline-block;
-    position: relative;
+  width: 100%;
+  display: inline-block;
+  position: relative;
 }
 
 .ww-newsletter .input-email-container input {
-    padding: 10px 60px 10px 20px;
-    width: 100%;
-    outline: none;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    border: none;
+  padding: 10px 60px 10px 20px;
+  width: 100%;
+  outline: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  border: none;
 }
 
 .ww-newsletter .input-email-container input::placeholder {
-    color: #B0B0B0;
+  color: #b0b0b0;
 }
 
 .ww-newsletter .btn-send {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 50px;
-    background-color: #CBCBCB;
-    color: white;
-    text-align: center;
-    font-size: 20px;
-    padding-top: 7px;
-    cursor: pointer;
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    transition: all 1s ease;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50px;
+  background-color: #cbcbcb;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  padding-top: 7px;
+  cursor: pointer;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  transition: all 1s ease;
 }
 
 .ww-newsletter .input-email-container .btn-send.after-click {
-    width: 100%;
+  width: 100%;
 }
 
 .ww-newsletter .input-email-container .btn-send.after-click i {
-    display: none;
+  display: none;
 }
 
 .ww-newsletter .input-email-container .btn-send .after-text {
-    opacity: 1 !important;
+  opacity: 1 !important;
 }
 
 .ww-newsletter .input-email-container .btn-send .after-text-anim {
-    opacity: 0;
-    animation: fadeIn ease 1s;
-    animation-iteration-count: 1;
-    animation-delay: 0.8s;
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+  opacity: 0;
+  animation: fadeIn ease 1s;
+  animation-iteration-count: 1;
+  animation-delay: 0.8s;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .ww-newsletter input {
-    font-size: 100%;
-    border: 1px solid #757575;
-    outline: none;
-    padding: 5px 10px;
+  font-size: 100%;
+  border: 1px solid #757575;
+  outline: none;
+  padding: 5px 10px;
 }
 
 .ww-newsletter input::placeholder {
-    color: #757575;
+  color: #757575;
 }
 
 .ww-newsletter .send-text {
-    padding: 5px 10px;
-    display: inline-block;
+  padding: 5px 10px;
+  display: inline-block;
 }
 
 .ww-newsletter .invalid-email {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    width: 100%;
-    text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  width: 100%;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
-    .ww-newsletter .center-text {
-        width: 80%;
-    }
-    .ww-newsletter .input-email-container {
-        width: 80%;
-    }
-    .ww-newsletter .editing-title {
-        width: 150px;
-    }
+  .ww-newsletter .center-text {
+    width: 80%;
+  }
+  .ww-newsletter .input-email-container {
+    width: 80%;
+  }
+  .ww-newsletter .editing-title {
+    width: 150px;
+  }
 }
 
 @media (min-width: 992px) {
-    .ww-newsletter .center-text {
-        width: 70%;
-    }
-    .ww-newsletter .input-email-container {
-        width: 70%;
-    }
+  .ww-newsletter .center-text {
+    width: 70%;
+  }
+  .ww-newsletter .input-email-container {
+    width: 70%;
+  }
 }
 
 @media (min-width: 1200px) {
-    .ww-newsletter .center-text {
-        width: 60%;
-    }
-    .ww-newsletter .input-email-container {
-        width: 60%;
-    }
+  .ww-newsletter .center-text {
+    width: 60%;
+  }
+  .ww-newsletter .input-email-container {
+    width: 60%;
+  }
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-moz-keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-o-keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-ms-keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>
