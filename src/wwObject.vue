@@ -19,7 +19,7 @@
 export default {
     name: "ww-newsletter",
     props: {
-        wwObjectRef: Object
+        wwObject: Object
     },
     data() {
         return {
@@ -33,10 +33,6 @@ export default {
         }
     },
     computed: {
-        wwObject() {
-            //return this.wwObjectRef.wwGet();
-            return this.$store.state.wwObjects[this.wwObjectRef.uniqueId];
-        },
     },
     methods: {
         sendFormInfo: async function (designId, data) {
