@@ -19,10 +19,11 @@
 export default {
     name: "ww-newsletter",
     props: {
-        wwObject: Object
+        wwObjectCtrl: Object,
     },
     data() {
         return {
+            wwObject: this.wwObjectCtrl.get(),
             loading: false,
             afterMessage: this.wwObject.content.data.nokMessage,
             showAfterMessage: false,

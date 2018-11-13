@@ -1,4 +1,4 @@
-import wwObject from './wwObject.vue'
+import wwObject from './wwObjectNewsletter.vue'
 
 const name = "ww-newsletter";
 const wwEnableMetrics = false;
