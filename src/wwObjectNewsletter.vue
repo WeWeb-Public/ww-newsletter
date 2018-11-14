@@ -25,15 +25,19 @@ export default {
         return {
             wwObject: this.wwObjectCtrl.get(),
             loading: false,
-            afterMessage: this.wwObject.content.data.nokMessage,
             showAfterMessage: false,
             invalidEmailAddress: false,
-            btnSendBgC: this.wwObject.content.data.btnSendBgC,
             email: '',
             wwLang: wwLib.wwLang
         }
     },
     computed: {
+        afterMessage() {
+            return this.wwObject.content.data.nokMessage;
+        },
+        btnSendBgC() {
+            return this.wwObject.content.data.btnSendBgC;
+        },
     },
     methods: {
         sendFormInfo: async function (designId, data) {
