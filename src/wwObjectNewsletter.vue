@@ -23,7 +23,6 @@ export default {
     },
     data() {
         return {
-            wwObject: this.wwObjectCtrl.get(),
             loading: false,
             showAfterMessage: false,
             invalidEmailAddress: false,
@@ -32,6 +31,9 @@ export default {
         }
     },
     computed: {
+        wwObject() {
+            return this.wwObjectCtrl.get();
+        },
         afterMessage() {
             return this.wwObject.content.data.nokMessage;
         },
