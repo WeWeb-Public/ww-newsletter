@@ -5,16 +5,20 @@ const wwEnableMetrics = false;
 
 const addComponent = function () {
     if (window.vm) {
-        window.vm.addComponent(name, wwObject);
 
-        wwLib.wwObject.registerContentType(
-            name,
-            {
+        wwLib.wwObject.register({
+            content: {
                 type: name,
                 data: {}
             },
-            wwEnableMetrics
-        );
+            enableMetrics: wwEnableMetrics,
+            /* wwManager:start */
+            cmsOptions: {
+            }
+            /* wwManager:end */
+        });
+
+        window.vm.addComponent(name, wwObject);
 
         return true;
     }
