@@ -49,6 +49,13 @@ export default {
                 data
             );
         },
+        sendFormInfoToMailchimp: async function (designId, data) {
+            return axios.post(
+                // wwApiSource + '/design/' + designId + '/send_form_info',
+                'localhost:3000/design/' + designId + '/mailchimp/add_member_to_list',
+                data
+            );
+        },
         saveAddress: async function () {
             console.log(this.wwObject);
             var element = "btn-send-" + this.wwObject.uniqueId;
@@ -64,14 +71,14 @@ export default {
 
             this.invalidEmailAddress = false;
 
-            var mailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            const mailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if (!this.email || !mailRegex.test(this.email)) {
                 this.invalidEmailAddress = true;
                 this.loading = false;
                 return;
             }
 
-            var request = {
+            const request = {
                 to: this.wwObject.content.data.emailAddress,
                 lang: wwLib.wwLang.lang,
                 type: 'newsletter',
@@ -79,9 +86,18 @@ export default {
                     email: this.email
                 }
             };
+            const mailchimpRequest = {
+                listId: 0, // list selected in popup
+                memberInfo: { 
+                    email_address: this.wwObject.content.data.emailAddress,
+                    status: 'subscribed'
+                }
+            }
 
             try {
                 await this.sendFormInfo(wwLib.$store.state.design.info.designId, request)
+                // if mailchimp integration 
+                await this.sendFormInfoToMailchimp(wwLib.$store.state.design.info.designId, mailchimpRequest)
                 this.loading = false;
                 this.btnSendBgC = JSON.parse(JSON.stringify(this.wwObject.content.data.okBtnSendBgC));
                 btnSendElement.classList.add('after-click');
