@@ -27,7 +27,8 @@ export default {
             showAfterMessage: false,
             invalidEmailAddress: false,
             email: '',
-            wwLang: wwLib.wwLang
+            wwLang: wwLib.wwLang,
+            apiUrl: 'http://localhost:3120/api/v1'
         }
     },
     computed: {
@@ -44,15 +45,13 @@ export default {
     methods: {
         sendFormInfo: async function (designId, data) {
             return axios.post(
-                // wwApiSource + '/design/' + designId + '/send_form_info',
-                'localhost:3000/design/' + designId + '/send_form_info',
+                `${this.apiUrl}/design/${designId}/send_form_info`,
                 data
             );
         },
         sendFormInfoToMailchimp: async function (designId, data) {
             return axios.post(
-                // wwApiSource + '/design/' + designId + '/send_form_info',
-                'localhost:3000/design/' + designId + '/mailchimp/add_member_to_list',
+                `${this.apiUrl}/design/${designId}/mailchimp/add_member_to_list`,
                 data
             );
         },
@@ -87,7 +86,7 @@ export default {
                 }
             };
             const mailchimpRequest = {
-                listId: 0, // list selected in popup
+                listId: 0, // list selected in popup ${this.wwObject.data.listMailChimpId}
                 memberInfo: { 
                     email_address: this.wwObject.content.data.emailAddress,
                     status: 'subscribed'
@@ -96,7 +95,7 @@ export default {
 
             try {
                 await this.sendFormInfo(wwLib.$store.state.design.info.designId, request)
-                // if mailchimp integration 
+                // if mailchimp integration // if ${this.wwObject.data.listMailChimpId}
                 await this.sendFormInfoToMailchimp(wwLib.$store.state.design.info.designId, mailchimpRequest)
                 this.loading = false;
                 this.btnSendBgC = JSON.parse(JSON.stringify(this.wwObject.content.data.okBtnSendBgC));
