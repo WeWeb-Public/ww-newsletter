@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    name: "ww-newsletter",
+    name: "__COMPONENT_NAME__",
     props: {
         wwObjectCtrl: Object,
     },
