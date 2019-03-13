@@ -9,7 +9,13 @@ const addComponent = function () {
         wwLib.wwObject.register({
             content: {
                 type: name,
-                data: {}
+                data: {
+                    emailAddress: 'contact@weweb.io',
+                    okBtnSendBgC: 'green',
+                    nokBtnSendBgC: 'red',
+                    okMessage: 'We\'ll get in touch soon!',
+                    nokMessage: 'We\'ll get in touch soon!'
+                }
             },
             upsales: {
                 wwAnalytics: {
