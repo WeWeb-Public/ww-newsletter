@@ -21,11 +21,7 @@ const addComponent = function () {
                 wwAnalytics: {
                     click: false
                 }
-            },
-            /* wwManager:start */
-            cmsOptions: {
             }
-            /* wwManager:end */
         });
 
         window.vm.addComponent({

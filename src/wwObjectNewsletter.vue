@@ -40,7 +40,7 @@ export default {
         },
     },
     methods: {
-        sendFormInfo: async function (designId, data) {
+        async sendFormInfo (designId, data) {
             return axios.post(
                 'https://weweb.herokuapp.com/api/v1/design/' + designId + '/send_form_info',
                 // wwApiSource + '/design/' + designId + '/send_form_info',
@@ -48,7 +48,7 @@ export default {
                 data
             );
         },
-        saveAddress: async function () {
+        async saveAddress () {
             console.log(this.wwObject);
             var element = "btn-send-" + this.wwObject.uniqueId;
             var btnSendElement = document.getElementById(element);
@@ -103,7 +103,7 @@ export default {
                 this.afterMessage = this.wwObject.content.data.nokMessage;
             }
         },
-        reset: function () {
+        reset () {
             var element = "btn-send-" + this.wwObject.uniqueId;
             var btnSendElement = document.getElementById(element);
             var afterTextElement = btnSendElement.querySelector('#after-text');
@@ -115,7 +115,7 @@ export default {
             return;
         }
     },
-    mounted: function () { }
+    mounted () { }
 };
 </script>
 
