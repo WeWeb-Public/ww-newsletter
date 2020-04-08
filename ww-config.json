@@ -1,0 +1,19 @@
+{
+	"componentPath": "./src/wwObjectNewsletter.vue",
+	"content": {
+		"type": "ww-newsletter",
+		"data": {
+			"emailAddress": "contact@weweb.io",
+			"okBtnSendBgC": "green",
+			"nokBtnSendBgC": "red",
+			"okMessage": "We'll get in touch soon!",
+			"nokMessage": "We'll get in touch soon!"
+		}
+	},
+	"upsales": {
+		"wwAnalytics": {
+			"click": false
+		}
+	},
+	"cmsOptions": {}
+}
